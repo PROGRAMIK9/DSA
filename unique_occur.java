@@ -1,4 +1,7 @@
-class Solution {
+import java.util.*;
+
+
+class unique_occur {
     public boolean uniqueOccurrences(int[] arr) {
        Map <Integer, Integer> map = new HashMap<>();
        for(int x:arr){
