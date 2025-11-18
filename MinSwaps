@@ -1,0 +1,29 @@
+// User function Template for Java
+
+class Solution {
+    // Function for finding maximum and value pair
+    int minSwap(int[] arr, int k) {
+        // Complete the function
+        int goodCount =0;
+        for(int x : arr){
+            if(x<=k){goodCount++;}
+        }
+        int badCount = 0;
+        for(int i=0;i<goodCount;i++){
+            if(arr[i]>k) badCount++;
+        }
+        int minSwap = badCount;
+        for(int i=goodCount, j=0;i<arr.length;i++,j++){
+            if(arr[j]>k) badCount--;
+            if(arr[i]>k) badCount++;
+            minSwap = Math.min(badCount,minSwap);
+        }
+        return minSwap;
+        
+    }
+    void swap(int arr[], int j, int k){
+        int temp = arr[j];
+        arr[j] = arr[k];
+        arr[k] = temp;
+    }
+}
