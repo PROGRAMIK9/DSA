@@ -1,0 +1,17 @@
+class Solution {
+    public static int maxProfit(int[] prices) {
+        // code here
+        int n = prices.length;
+        int firstbuy = Integer.MIN_VALUE;
+        int firstsell = 0;
+        int secbuy = Integer.MIN_VALUE;
+        int secsell = 0;
+        for(int i=0;i<n;i++){
+            firstbuy = Math.max(firstbuy, -prices[i]);
+            firstsell = Math.max(firstsell, firstbuy +prices[i]);
+            secbuy = Math.max(secbuy, firstsell-prices[i]);
+            secsell = Math.max(secsell, prices[i]+secbuy);
+        }
+        return secsell;
+    }
+}
