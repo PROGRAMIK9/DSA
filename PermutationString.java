@@ -1,7 +1,7 @@
 // Java program to generate power set in
 // lexicographic order.
 class GFG {
-
+    //not permutation, its subsequence
     static void print(String str, int length, int index, String curr){
         if(index==n)return;
         if(curr!=null && !curr.trim().isEmpty()){
@@ -20,5 +20,3 @@ class GFG {
         print(str,str.length(),index,curr);
     }
 }
-
-// This code is contributed by PrinciRaj1992
