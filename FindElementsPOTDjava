@@ -1,0 +1,30 @@
+class Solution {
+    public int countLessEqual(int[] arr, int x) {
+        // code here
+        int pivot = getPivot(arr);
+        int left = getCount(arr,0,pivot-1,x);
+        int right = getCount(arr,pivot,arr.length-1,x);
+        return left+right;
+    }
+    private int getCount(int arr[], int l, int r, int val){
+        int start = l;
+        while(l<=r){
+            int mid = (l+r)/2;
+            if(arr[mid]>val){
+                r=mid-1;
+            }else{
+                l=mid+1;
+            }
+        }
+        return l-start;
+    }
+    private int getPivot(int[] arr){
+        int l =0, r=arr.length-1;
+        while(l<r){
+            int mid = (l+r)/2;
+            if(arr[mid]>arr[r]) l = mid+1;
+            else r=mid;
+        }
+        return l;
+    }
+}
