@@ -1,0 +1,28 @@
+class Solution {
+    public int atMost(String s,int k){
+        if(k<0){
+            return 0;
+        }
+        int left=0;
+        int count=0;
+        HashMap<Character,Integer> map=new HashMap<>();
+        for(int right=0;right<s.length();right++){
+            char ch=s.charAt(right);
+            map.put(ch,map.getOrDefault(ch,0)+1);
+            
+            while(map.size()>k){
+                map.put(s.charAt(left),map.get(s.charAt(left))-1);
+                if(map.get(s.charAt(left))==0){
+                    map.remove(s.charAt(left));
+                }
+                left++;
+            }
+            count+=right-left+1;
+        }
+        return count;
+    }
+    public int countSubstr(String s, int k) {
+        return atMost(s,k)-atMost(s,k-1);
+        
+    }
+}
