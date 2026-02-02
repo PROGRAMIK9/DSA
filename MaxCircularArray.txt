@@ -1,0 +1,23 @@
+class Solution {
+    public int maxCircularSum(int arr[]) {
+        // code here
+        int n = arr.length;
+        int mini = Integer.MAX_VALUE, minisum =0;
+        int max = Integer.MIN_VALUE, maxsum =0;
+        int total = 0;
+        for(int i:arr){
+            total+=i;
+            minisum += i;
+            maxsum += i;
+            mini = Math.min(mini,minisum);
+            max = Math.max(max,maxsum);
+            if(minisum>0){
+                minisum = 0;
+            }if(maxsum <0){
+                maxsum =0;
+            }
+        }
+        if(max<0) return max;
+        return Math.max(max,total-mini);
+    }
+}
