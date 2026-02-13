@@ -35,7 +35,6 @@ class Solution {
 
                 // Update the current height and the difference array
                 currentWater += needed;
-                // Subtract 'needed' at the end of the window to stop its effect
                 if (i + w < n) {
                     diff[i + w] -= needed;
                 }
