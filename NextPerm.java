@@ -13,7 +13,7 @@ class Solution {
             }
             swap(arr,i,j);
         }
-        reverse(arr,i+1,n-1);
+        reverse(arr,i+1 ,n-1);
     }
     private void swap(int[] arr, int i, int j){
         int temp = arr[i];
