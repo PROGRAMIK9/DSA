@@ -17,3 +17,25 @@ class Solution {
        return max_sum;
     }
 }
+
+//alterne sol
+class Solution {
+    public int maxSubarrayXOR(int[] arr, int k) {
+        // code here
+        int n = arr.length;
+        int curr =0;
+        int max =0;
+        for(int i=0;i<k;i++){
+            curr^=arr[i];
+        }
+        max = curr;
+        int start =0;
+        int i=k;
+        while(i<n){
+            curr = curr ^ arr[start++] ^ arr[i++];
+            max = Math.max(curr,max);
+        }
+        return max;
+    }
+}
+
