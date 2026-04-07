@@ -12,7 +12,7 @@ class Solution {
                 rank[w][women[w][i]] = i;
             }
         }
-        Queue<Integer> freeMen = new LinkedList<>();
+        Queue<Integer> freeMen = new LinkedList<>();//can use an array as well
         for(int i=0;i<n;i++){
             freeMen.add(i);
         }
