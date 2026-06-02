@@ -1,0 +1,126 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    /*
+     * Complete the 'shortestReach' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts following parameters:
+     *  1. INTEGER n
+     *  2. 2D_INTEGER_ARRAY edges
+     *  3. INTEGER s
+     */
+
+    public static List<Integer> shortestReach(int n, List<List<Integer>> edges, int s) {
+    // Write your code here
+        ArrayList<int[]>[] graph = new ArrayList[n+1];
+        for(int i=1;i<=n;i++){
+            graph[i]=new ArrayList<>();
+        }
+        for(List<Integer> edge:edges){
+            int u = edge.get(0);
+            int v = edge.get(1);
+            int w = edge.get(2);
+            graph[u].add(new int[]{v,w});
+            graph[v].add(new int[]{u,w});
+        }
+        int dist[] = new int[n+1];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[s]=0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return Integer.compare(a[0], b[0]);
+            }
+        });
+        pq.offer(new int[]{0,s});
+        while(!pq.isEmpty()){
+            int[] curr = pq.poll();
+            int currDist = curr[0];
+            int u = curr[1];
+            if(currDist>dist[u])continue;
+            for (int[] neighbor:graph[u]) {
+                int v = neighbor[0];
+                int weight = neighbor[1];
+                int distance = currDist + weight;
+                if (distance < dist[v]) {
+                    dist[v] = distance;
+                    pq.offer(new int[]{distance, v});
+                }
+            }
+        } 
+        List<Integer> result = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            if (i == s) {
+                continue; 
+            }
+            
+            if (dist[i] == Integer.MAX_VALUE) {
+                result.add(-1);
+            } else {
+                result.add(dist[i]);
+            }
+        }
+        return result;
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int t = Integer.parseInt(bufferedReader.readLine().trim());
+
+        IntStream.range(0, t).forEach(tItr -> {
+            try {
+                String[] firstMultipleInput = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
+
+                int n = Integer.parseInt(firstMultipleInput[0]);
+
+                int m = Integer.parseInt(firstMultipleInput[1]);
+
+                List<List<Integer>> edges = new ArrayList<>();
+
+                IntStream.range(0, m).forEach(i -> {
+                    try {
+                        edges.add(
+                            Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+                                .map(Integer::parseInt)
+                                .collect(toList())
+                        );
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+
+                int s = Integer.parseInt(bufferedReader.readLine().trim());
+
+                List<Integer> result = Result.shortestReach(n, edges, s);
+
+                bufferedWriter.write(
+                    result.stream()
+                        .map(Object::toString)
+                        .collect(joining(" "))
+                    + "\n"
+                );
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
